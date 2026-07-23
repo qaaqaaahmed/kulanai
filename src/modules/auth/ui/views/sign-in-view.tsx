@@ -7,6 +7,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { OctagonAlert } from "lucide-react";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
@@ -37,15 +38,37 @@ export const SignInView = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
-          router.push("/");
           setIsPending(false);
+          router.push("/");
         },
         onError: ({ error }) => {
           setError(error.message);
           setIsPending(false);
+        },
+      },
+    );
+  };
+
+  const onSocial = (provider: "github" | "google") => {
+    setError(null);
+    setIsPending(true);
+
+    authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setIsPending(false);
+        },
+        onError: ({ error }) => {
+          setIsPending(false);
+          setError(error.message);
         },
       },
     );
@@ -126,16 +149,18 @@ export const SignInView = () => {
                   variant="outline"
                   className="w-full"
                   disabled={pending}
+                  onClick={() => onSocial("google")}
                 >
-                  Google
+                  <FaGoogle />
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   className="w-full"
                   disabled={pending}
+                  onClick={() => onSocial("github")}
                 >
-                  GitHub
+                  <FaGithub />
                 </Button>
               </div>
 

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlert } from "lucide-react";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -51,6 +52,7 @@ export const SignUpView = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
@@ -60,6 +62,27 @@ export const SignUpView = () => {
         onError: ({ error }) => {
           setError(error.message);
           setIsPending(false);
+        },
+      },
+    );
+  };
+
+  const onSocial = (provider: "github" | "google") => {
+    setError(null);
+    setIsPending(true);
+
+    authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setIsPending(false);
+        },
+        onError: ({ error }) => {
+          setIsPending(false);
+          setError(error.message);
         },
       },
     );
@@ -166,8 +189,9 @@ export const SignUpView = () => {
                   type="button"
                   variant="outline"
                   disabled={isPending}
+                  onClick={() => onSocial("google")}
                 >
-                  Google
+                  <FaGoogle />
                 </Button>
 
                 <Button
@@ -175,8 +199,9 @@ export const SignUpView = () => {
                   type="button"
                   variant="outline"
                   disabled={isPending}
+                  onClick={() => onSocial("github")}
                 >
-                  Github
+                  <FaGithub />
                 </Button>
               </div>
 
