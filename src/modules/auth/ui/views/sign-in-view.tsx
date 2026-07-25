@@ -172,7 +172,7 @@ export const SignInView = () => {
               </div>
             </div>
           </form>
-          <div className="bg-radial from-green-700 to-green-900 md:flex flex-col items-center justify-center gap-y-4 relative hidden">
+          <div className="bg-radial from-sidebar-accent to-sidebar md:flex flex-col items-center justify-center gap-y-4 relative hidden">
             <img src="./logo.svg" alt="image" className="h-23 w-23" />
             <p className="text-2xl text-white font-semibold">Kulan.ai</p>
           </div>
