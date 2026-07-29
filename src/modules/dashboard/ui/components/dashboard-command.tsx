@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 interface DashboardCommandProps {
   open: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  // setIsOpen: (value: boolean) => void;
 }
 export const DashboardCommand = ({
   open,
