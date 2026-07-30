@@ -49,7 +49,7 @@ export const ResponsiveDialog = ({
   }
 
   return (
-    <Dialog open={open} onOpenChange={() => {}}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
