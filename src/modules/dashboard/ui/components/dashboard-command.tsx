@@ -1,6 +1,6 @@
 "use client";
 import {
-  CommandDialog,
+  CommandResponsiveDialog,
   CommandInput,
   CommandItem,
   CommandList,
@@ -17,11 +17,11 @@ export const DashboardCommand = ({
   setIsOpen,
 }: DashboardCommandProps) => {
   return (
-    <CommandDialog open={open} onOpenChange={setIsOpen}>
+    <CommandResponsiveDialog open={open} onOpenChange={setIsOpen}>
       <CommandInput placeholder="find a meeting or an agent" />
       <CommandList>
         <CommandItem>Test</CommandItem>
       </CommandList>
-    </CommandDialog>
+    </CommandResponsiveDialog>
   );
 };
