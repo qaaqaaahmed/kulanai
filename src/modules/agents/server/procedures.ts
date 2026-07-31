@@ -1,14 +1,10 @@
 import { db } from "@/db/drizzle";
 import { agents } from "@/db/schema";
-import {
-  baseProcedure,
-  createTRPCRouter,
-  protectedProcedure,
-} from "@/trpc/init";
+import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { AgentsInsertSchema } from "../schemas";
 import z from "zod";
-import { eq } from "drizzle-orm";
+import { eq, getTableColumns, sql } from "drizzle-orm";
 
 export const agentsRouter = createTRPCRouter({
   getOne: protectedProcedure
@@ -19,14 +15,22 @@ export const agentsRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const [existingAgent] = await db
-        .select()
+        .select({
+          ...getTableColumns(agents),
+          meetingCount: sql<number>`5`,
+        })
         .from(agents)
         .where(eq(agents.userId, input.id));
       return existingAgent;
     }),
   //TODO: Use protected procedures for the getmany route
   getMany: protectedProcedure.query(async () => {
-    const data = await db.select().from(agents);
+    const data = await db
+      .select({
+        ...getTableColumns(agents),
+        meetingCount: sql<number>`5`,
+      })
+      .from(agents);
     // await new Promise((resolve) => setTimeout(resolve, 5000));
     // throw new TRPCError({ code: "BAD_REQUEST" });
 
