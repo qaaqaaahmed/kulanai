@@ -19,14 +19,20 @@ export const agentsRouter = createTRPCRouter({
         id: z.string(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const [existingAgent] = await db
         .select({
           ...getTableColumns(agents),
           meetingCount: sql<number>`5`,
         })
         .from(agents)
-        .where(eq(agents.userId, input.id));
+        .where(
+          and(eq(agents.userId, ctx.auth.user.id), eq(agents.id, input.id)),
+        );
+
+      if (!existingAgent) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
+      }
       return existingAgent;
     }),
   //TODO: Use protected procedures for the getmany route

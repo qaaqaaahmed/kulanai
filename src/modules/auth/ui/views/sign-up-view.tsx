@@ -215,7 +215,7 @@ export const SignUpView = () => {
           </form>
 
           <div className="bg-radial from-sidebar-accent to-sidebar hidden md:flex flex-col items-center justify-center">
-            <img src="./logo.svg" alt="Logo" className="h-23 w-23" />
+            <img src="/logo.svg" alt="Logo" className="h-23 w-23" />
             <p className="text-2xl font-semibold text-white">Kulan.ai</p>
           </div>
         </CardContent>

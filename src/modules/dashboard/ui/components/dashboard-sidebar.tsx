@@ -45,7 +45,7 @@ export const DashboardSidebar = () => {
     <Sidebar>
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href="/" className="flex items-center gap-2 px-2 pt-2">
-          <Image src="./logo.svg" height={36} width={36} alt="Kulan.Ai" />
+          <Image src="/logo.svg" height={36} width={36} alt="Kulan.Ai" />
           <p className="text-2xl font-semibold">Kulan AI</p>
         </Link>
       </SidebarHeader>
