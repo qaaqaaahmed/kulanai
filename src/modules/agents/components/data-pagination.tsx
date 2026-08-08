@@ -1,4 +1,9 @@
 import { Button } from "@/components/ui/button";
+//you will notice that on page change is set filters which basically sets the page to the url then component is rerendered with
+//the new page and then a fetch is made with usesuspensequery on the view page and data is fetched for that page
+//this works hand in hand with the backend that gets a page say its gets page 2, the offset will be 2-1 * 10 =  it will
+//skip the first 10 results and go from there, alos limit helps limit the number of results returned so that db reconciles
+//what numbers to skip
 
 interface Props {
   page: number;
