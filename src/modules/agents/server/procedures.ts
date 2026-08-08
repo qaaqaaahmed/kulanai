@@ -123,10 +123,6 @@ export const agentsRouter = createTRPCRouter({
         total: total.count,
         totalPages,
       };
-      // await new Promise((resolve) => setTimeout(resolve, 5000));
-      // throw new TRPCError({ code: "BAD_REQUEST" });
-
-      // return data;
     }),
   create: protectedProcedure
     .input(AgentsInsertSchema)
