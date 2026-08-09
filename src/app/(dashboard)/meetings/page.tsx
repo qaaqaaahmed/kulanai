@@ -1,3 +1,4 @@
+import { MeetingsListHeader } from "@/modules/meetings/ui/components/meetings-list-header";
 import {
   MeetingsView,
   MeetingsViewError,
@@ -13,13 +14,16 @@ const Page = () => {
 
   void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({}));
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={<MeetingsViewLoading />}>
-        <ErrorBoundary fallback={<MeetingsViewError />}>
-          <MeetingsView />;
-        </ErrorBoundary>
-      </Suspense>
-    </HydrationBoundary>
+    <>
+      <MeetingsListHeader />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense fallback={<MeetingsViewLoading />}>
+          <ErrorBoundary fallback={<MeetingsViewError />}>
+            <MeetingsView />
+          </ErrorBoundary>
+        </Suspense>
+      </HydrationBoundary>
+    </>
   );
 };
 
