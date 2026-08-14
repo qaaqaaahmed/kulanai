@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-//converting the seconds to ms as per api requirement of humanize
+//converting the seconds from db to ms as per api requirement of humanize
 function formatDurationFromDB(seconds: number) {
   return humanizeDuration(seconds * 1000, {
     round: true,
