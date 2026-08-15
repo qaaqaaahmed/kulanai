@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { GeneratedAvatar } from "@/components/generated-avatar";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { MeetingsGetOne } from "../../types";
@@ -22,7 +21,7 @@ import { CommandSelect } from "@/components/command-select";
 import { NewAgentDialog } from "@/modules/agents/components/new-agent-dialog";
 
 interface MeetingsForm {
-  onSuccess?: (id: string) => void;
+  onSuccess?: (id?: string) => void;
   onCancel?: () => void;
   initialValues?: MeetingsGetOne;
 }
@@ -77,7 +76,7 @@ export const MeetingsForm = ({
           );
         }
 
-        onSuccess?.(data.id);
+        onSuccess?.();
       },
       onError: (error) => {
         toast.error(error.message);
