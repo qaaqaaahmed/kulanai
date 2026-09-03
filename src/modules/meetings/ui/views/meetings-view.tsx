@@ -16,7 +16,6 @@ import { DataPagination } from "@/components/data-pagination";
 
 export const MeetingsView = () => {
   const trpc = useTRPC();
-  const queryClient = useQueryClient();
   const router = useRouter();
   const [filters, setfilters] = useMeetingsFilters();
 
