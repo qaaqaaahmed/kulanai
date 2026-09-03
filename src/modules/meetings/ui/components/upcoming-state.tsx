@@ -34,7 +34,7 @@ export const UpcomingState = ({
         </Button>
 
         <Button disabled={isCancelling} className="w-full lg:w-auto" asChild>
-          <Link href={`/call${meetingId}`}>
+          <Link href={`/call/${meetingId}`}>
             <VideoIcon />
             Start meeting
           </Link>
