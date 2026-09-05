@@ -1,6 +1,6 @@
 import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
-import { BanIcon, VideoIcon } from "lucide-react";
+import { VideoIcon } from "lucide-react";
 import Link from "next/link";
 
 interface Props {
@@ -18,7 +18,7 @@ export const ActiveState = ({ meetingId }: Props) => {
 
       <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-4">
         <Button className="w-full lg:w-auto" asChild>
-          <Link href={`/call${meetingId}`}>
+          <Link href={`/call/${meetingId}`}>
             <VideoIcon />
             Join meeting
           </Link>

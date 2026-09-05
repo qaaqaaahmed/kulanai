@@ -65,9 +65,12 @@ export const meetingsRouter = createTRPCRouter({
       },
     ]);
 
+    const issuedAt = Math.floor(Date.now() / 1000) - 60;
+
     const token = streamVideo.generateUserToken({
       user_id: ctx.auth.user.id,
       validity_in_seconds: 3600,
+      iat: issuedAt,
     });
 
     // DEBUG ONLY — decode payload without verifying signature
