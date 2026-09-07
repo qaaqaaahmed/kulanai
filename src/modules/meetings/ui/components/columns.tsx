@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { GeneratedAvatar } from "@/components/generated-avatar";
-import { VideoIcon } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { MeetingsGetMany } from "../../types";
 import humanizeDuration from "humanize-duration";
