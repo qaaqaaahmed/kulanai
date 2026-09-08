@@ -5,7 +5,7 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 
 import { Badge } from "@/components/ui/badge";
 import { MeetingsGetMany } from "../../types";
-import humanizeDuration from "humanize-duration";
+
 import { format } from "date-fns";
 
 import {
@@ -16,16 +16,9 @@ import {
   CornerDownRightIcon,
   LoaderIcon,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatDurationFromDB } from "@/lib/utils";
 
 //converting the seconds from db to ms as per api requirement of humanize
-function formatDurationFromDB(seconds: number) {
-  return humanizeDuration(seconds * 1000, {
-    round: true,
-    largest: 1,
-    units: ["h", "m", "s"],
-  });
-}
 
 const statusIconMap = {
   upcoming: ClockArrowUpIcon,
