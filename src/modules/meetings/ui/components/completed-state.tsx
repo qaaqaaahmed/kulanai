@@ -14,6 +14,8 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { formatDurationFromDB } from "@/lib/utils";
+import { Transcript } from "./transcript";
+import { ChatProvider } from "./chat-provider";
 
 interface Props {
   data: MeetingsGetOne;
@@ -65,6 +67,10 @@ export const CompletedState = ({ data }: Props) => {
           </ScrollArea>
         </div>
 
+        <TabsContent value="transcript">
+          <Transcript meetingId={data.id} />
+        </TabsContent>
+
         <TabsContent value="recording">
           <div className="bg-white rounded-lg px-4 py-5 border">
             <video
@@ -75,6 +81,9 @@ export const CompletedState = ({ data }: Props) => {
           </div>
         </TabsContent>
 
+        <TabsContent value="chat">
+          <ChatProvider meetingId={data.id} meetingName={data.name} />
+        </TabsContent>
         <TabsContent value="summary">
           <div className="bg-white rounded-lg border">
             <div className="flex flex-col gap-5 px-4 py-5">
