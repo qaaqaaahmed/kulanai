@@ -1,11 +1,21 @@
+import { db } from "@/db/drizzle";
+import { agents, meetings } from "@/db/schema";
 import { auth } from "@/lib/auth";
+import { polarClient } from "@/lib/polar";
+import {
+  MAX_FREE_AGENTS,
+  MAX_FREE_MEETINGS,
+} from "@/modules/premium/constants";
+
 import { initTRPC, TRPCError } from "@trpc/server";
+import { count, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 /**
  * This context creator accepts `headers` so it can be reused in both
  * the RSC server caller (where you pass `next/headers`) and the
  * API route handler (where you pass the request headers).
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   // const user = await auth(opts.headers);
   return { userId: "user_123" };
@@ -37,3 +47,45 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
 
   return next({ ctx: { ...ctx, auth: session } });
 });
+
+export const premiumProcedure = (entity: "meetings" | "agents") =>
+  protectedProcedure.use(async ({ ctx, next }) => {
+    const customer = await polarClient.customers.getStateExternal({
+      externalId: ctx.auth.user.id,
+    });
+    const isPremium = customer.activeSubscriptions.length > 0;
+
+    if (isPremium) return next({ ctx: { ...ctx, customer } });
+
+    if (entity === "meetings") {
+      const [userMeetings] = await db
+        .select({ count: count(meetings.id) })
+        .from(meetings)
+        .where(eq(meetings.userId, ctx.auth.user.id));
+
+      const hasReachedMaxFreeMeetings = userMeetings.count >= MAX_FREE_MEETINGS;
+
+      if (hasReachedMaxFreeMeetings) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You have reached the maximum number of free meetings",
+        });
+      }
+    }
+
+    if (entity === "agents") {
+      const [userAgents] = await db
+        .select({ count: count(agents.id) })
+        .from(agents)
+        .where(eq(agents.userId, ctx.auth.user.id));
+      const hasReachedMaxFreeAgents = userAgents.count >= MAX_FREE_AGENTS;
+
+      if (hasReachedMaxFreeAgents)
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You have reached the maximum number of free agents",
+        });
+    }
+
+    return next({ ctx: { ...ctx, customer } });
+  });

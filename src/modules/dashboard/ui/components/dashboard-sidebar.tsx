@@ -17,6 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DashboardUserButton } from "./dashboard-user-button";
+import { DashboardTrial } from "./dashboard-trial";
 
 const firstSection = [
   {
@@ -59,7 +60,7 @@ export const DashboardSidebar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               {firstSection.map((item) => (
-                <SidebarMenuItem>
+                <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
                     className={cn(
@@ -88,7 +89,7 @@ export const DashboardSidebar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               {secondSection.map((item) => (
-                <SidebarMenuItem>
+                <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
                     className={cn(
@@ -113,6 +114,7 @@ export const DashboardSidebar = () => {
       </SidebarContent>
 
       <SidebarFooter>
+        <DashboardTrial />
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>

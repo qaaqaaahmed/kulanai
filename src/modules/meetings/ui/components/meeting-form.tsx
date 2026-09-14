@@ -19,6 +19,7 @@ import { meetingsInsertSchema } from "../../schemas";
 import { useState } from "react";
 import { CommandSelect } from "@/components/command-select";
 import { NewAgentDialog } from "@/modules/agents/components/new-agent-dialog";
+import { useRouter } from "next/navigation";
 
 interface MeetingsForm {
   onSuccess?: (id?: string) => void;
@@ -34,6 +35,7 @@ export const MeetingsForm = ({
   const [agentSearch, setAgentSearch] = useState("");
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const agents = useQuery(
     trpc.agents.getMany.queryOptions({
@@ -49,26 +51,24 @@ export const MeetingsForm = ({
           trpc.meetings.getMany.queryOptions({}),
         );
 
-        //invalidate free tier usage
+        await queryClient.invalidateQueries(
+          trpc.premium.getFreeUsage.queryOptions(),
+        );
 
         onSuccess?.(data.id);
       },
       onError: (error) => {
         toast.error(error.message);
-
-        //TODO: CHECK IF ERROR IS FORBIDDEN -> REDIRECT TO UPGRADE
       },
     }),
   );
 
   const updateMeeting = useMutation(
     trpc.meetings.update.mutationOptions({
-      onSuccess: async (data) => {
+      onSuccess: async () => {
         await queryClient.invalidateQueries(
           trpc.meetings.getMany.queryOptions({}),
         );
-
-        //invalidate free tier usage
 
         if (initialValues?.id) {
           await queryClient.invalidateQueries(
@@ -81,7 +81,9 @@ export const MeetingsForm = ({
       onError: (error) => {
         toast.error(error.message);
 
-        //TODO: CHECK IF ERROR IS FORBIDDEN -> REDIRECT TO UPGRADE
+        if (error.data?.code === "FORBIDDEN") {
+          router.push("/upgarde");
+        }
       },
     }),
   );
