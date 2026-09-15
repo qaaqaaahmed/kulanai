@@ -300,15 +300,6 @@ export const meetingsRouter = createTRPCRouter({
           .default(DEFAULT_PAGE_SIZE),
         search: z.string().nullish(),
         agentId: z.string().nullish(),
-        // meetingStatus: z
-        //   .enum([
-        //     MeetingStatus.Upcoming,
-        //     MeetingStatus.Active,
-        //     MeetingStatus.Completed,
-        //     MeetingStatus.Cancelled,
-        //     MeetingStatus.Processing,
-        //   ])
-        //   .nullish(),
         status: z.enum(MeetingStatus).nullish(),
       }),
     )

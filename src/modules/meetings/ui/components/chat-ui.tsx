@@ -7,7 +7,6 @@ import {
   useCreateChatClient,
   Thread,
 } from "stream-chat-react";
-// @ts-expect-error -- Stream Chat CSS side-effect import has no type declaration
 import "stream-chat-react/dist/css/index.css";
 import { useEffect, useState } from "react";
 import { useTRPC } from "@/trpc/client";

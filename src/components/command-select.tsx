@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { Button } from "./ui/button";
-import { ChevronsUpDownIcon, Command } from "lucide-react";
+import { ChevronsUpDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   CommandEmpty,
@@ -30,7 +30,6 @@ export const CommandSelect = ({
   onSearch,
   value,
   placeholder = "Select an option",
-  isSearchable,
   className,
 }: Props) => {
   const [open, setOpen] = useState(false);
