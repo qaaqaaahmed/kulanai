@@ -1,6 +1,5 @@
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { MeetingsForm } from "./meeting-form";
-import { useRouter } from "next/navigation";
 import { MeetingsGetOne } from "../../types";
 
 interface UpdateMeetingDialogProps {
