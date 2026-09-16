@@ -5,6 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { PricingCard } from "../components/pricing-card";
+import { ErrorState } from "@/components/error-state";
 
 export const UpgradeView = () => {
   const trpc = useTRPC();
@@ -82,5 +83,5 @@ export const UpgradeViewLoading = () => {
 };
 
 export const UpgradeViewError = () => {
-  return <LoadingState title="Error" description="Something went wrong" />;
+  return <ErrorState title="Error" description="Something went wrong" />;
 };
