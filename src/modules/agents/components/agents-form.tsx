@@ -57,8 +57,6 @@ export const AgentsForm = ({
           trpc.agents.getMany.queryOptions({}),
         );
 
-        //invalidate free tier usage
-
         if (initialValues?.id) {
           await queryClient.invalidateQueries(
             trpc.agents.getOne.queryOptions({ id: initialValues.id }),
@@ -69,8 +67,6 @@ export const AgentsForm = ({
       },
       onError: (error) => {
         toast.error(error.message);
-
-        //TODO: CHECK IF ERROR IS FORBIDDEN -> REDIRECT TO UPGRADE
       },
     }),
   );

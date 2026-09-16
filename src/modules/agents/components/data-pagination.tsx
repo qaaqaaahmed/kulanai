@@ -14,7 +14,7 @@ export const DataPagination = ({ page, onPageChange, totalPages }: Props) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex-1 text-sm text-muted-foreground">
-        Page {page} of {totalPages || 1}
+        Page {page > totalPages ? 1 | page} of {totalPages || 1}
       </div>
 
       <div className="flex items-center justify-end py-4 space-x-2">

@@ -20,12 +20,11 @@ export const agentsRouter = createTRPCRouter({
   update: protectedProcedure
     .input(AgentsUpdateSchema)
     .mutation(async ({ ctx, input }) => {
+      const { id, ...data } = input;
       const [updatedAgent] = await db
         .update(agents)
-        .set(input)
-        .where(
-          and(eq(agents.id, input.id), eq(agents.userId, ctx.auth.user.id)),
-        )
+        .set(data)
+        .where(and(eq(agents.id, id), eq(agents.userId, ctx.auth.user.id)))
         .returning();
 
       if (!updatedAgent) {
@@ -76,13 +75,14 @@ export const agentsRouter = createTRPCRouter({
       }
       return existingAgent;
     }),
-  //TODO: Use protected procedures for the getmany route
+
   getMany: protectedProcedure
     .input(
       z.object({
-        page: z.number().default(DEFAULT_PAGE),
+        page: z.number().int().min(1).default(DEFAULT_PAGE),
         pageSize: z
           .number()
+          .int()
           .min(MIN_PAGE_SIZE)
           .max(MAX_PAGE_SIZE)
           .default(DEFAULT_PAGE_SIZE),
