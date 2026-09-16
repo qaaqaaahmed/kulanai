@@ -19,7 +19,7 @@ interface Props {
 }
 
 const Page = async ({ searchParams }: Props) => {
-  const session = auth.api.getSession({
+  const session = await auth.api.getSession({
     headers: await headers(),
   });
 
