@@ -82,7 +82,7 @@ export const MeetingsForm = ({
         toast.error(error.message);
 
         if (error.data?.code === "FORBIDDEN") {
-          router.push("/upgarde");
+          router.push("/upgrade");
         }
       },
     }),
